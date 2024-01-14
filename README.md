@@ -1,6 +1,8 @@
 # tunNgrok
 This repository serves to automate The installation of NGROK in Termux - 2024
 
+<img src="Images/tun-tcp.jpg" width="600px" heigth="600px">
+
 <h3>PLATFORMS</h3>
 - Termux
 
@@ -24,7 +26,7 @@ Restart your terminal
 </pre>
 
 <h3>Tunel TCP</h3>
-<img src="Images/tun-tcp.jpg" width="100px" heigth="100px">
+
 <pre>
   tun -s tcp -p 443
 </pre>
@@ -34,3 +36,7 @@ Restart your terminal
 <pre>
  tun -s http -p 8080
 </pre>
+
+<h3>Images</h3>
+<img src="Images/tun-tcp.jpg" width="600px" heigth="600px">
+

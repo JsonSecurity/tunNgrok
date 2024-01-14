@@ -21,7 +21,11 @@ Restart your terminal
 ```
 tun
 ```
-<h3>Tunel <span style="color: red;">TCP</span></h3>
+<h3>Tunel TCP</h3>
 ```
 tun -s tcp -p 443
+```
+<h3>Tunel HTTP</h3>
+```
+tun -s http -p 8080
 ```

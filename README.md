@@ -12,9 +12,7 @@ This repository serves to automate The installation of NGROK in Termux - 2024
   chmod +x ./install.sh
   ./install.sh
 </pre>
-
-
-<h3>Config (PATH)</h3>
+Config (PATH)
 <pre>
   ./ngrok.sh
 </pre>

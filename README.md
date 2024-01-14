@@ -5,7 +5,7 @@ This repository serves to automate The installation of NGROK in Termux - 2024
 - Termux
 
 <h3>INSTALACION</h3>
-  ```
+<pre>git clone</pre>
 git clone
 chmod +x ./install.sh
 ./install.sh

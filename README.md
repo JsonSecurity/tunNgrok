@@ -1,7 +1,7 @@
 # tunNgrok
 This repository serves to automate The installation of NGROK in Termux - 2024
 
-##PLATAFORMAS
+<h3>PLATAFORMAS</h3>
 - Termux
 
 ##INSTALACION

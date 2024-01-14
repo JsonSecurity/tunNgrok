@@ -37,6 +37,3 @@ Restart your terminal
  tun -s http -p 8080
 </pre>
 
-<h3>Images</h3>
-<img src="Images/tun-tcp.jpg" width="600px" heigth="600px">
-

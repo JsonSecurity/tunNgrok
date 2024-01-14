@@ -23,6 +23,16 @@ Restart your terminal
   tun
 </pre>
 
+[!] Script tun ngrok 3.2 by [ Json Security ]
+ 
+   [+] Execution:
+	    tun -e
+				
+   [+] Config:
+	    tun -s <protocolo> -p <puerto>
+			
+
+
 <h3>Tunel TCP</h3>
 
 <pre>

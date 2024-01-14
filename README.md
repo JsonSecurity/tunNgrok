@@ -24,7 +24,7 @@ Restart your terminal
 </pre>
 
 <h3>Tunel TCP</h3>
-<img src="images/tun-tcp.jpeg">
+<img src="images/tun-tcp.jpg">
 <pre>
   tun -s tcp -p 443
 </pre>

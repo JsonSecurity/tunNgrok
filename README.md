@@ -29,7 +29,7 @@ Restart your terminal
 	    tun -e
 				
    [+] Config:
-	    tun -s <protocolo> -p <puerto>
+	    tun -s \<protocolo\> -p \<puerto\>
 			
 
 

@@ -9,13 +9,13 @@ This repository serves to automate The installation of NGROK in Termux - 2024
 <h3>INSTALATION</h3>
 <pre>
   git clone https://github.com/JsonSecurity/tunNgrok
-  chmod +x ./install.sh
+  cd tunNgrok
+  chmod +x install.sh
+  chmod +x ngrok.sh
+	
   ./install.sh
 </pre>
-Config (PATH)
-<pre>
-  ./ngrok.sh
-</pre>
+
 Restart your terminal
 
 <h3>Help</h3>

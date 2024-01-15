@@ -70,23 +70,6 @@ logo() {
 	echo -e "   $autor$script"
 }
 
-path() {
-
-	if [[ $(ls "$HOME/.zshrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.zshrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
-		printf "\n$A .zshrc:$G tun\n"
-		echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.zshrc"
-		printf "$S Reinicia tu termina y ejecuta con:$G tun\n"
-	
-	elif [[ $(ls "$HOME/.bashrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.bashrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
-		printf "\n$S .bashrc:$G tun\n"
-		echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.bashrc"
-		printf "$S Reinicia tu termina y ejecuta con:$G tun\n"
-
-	#else
-	#	echo -e "\n$E$R .zshrc$W or$R .bashrc\n"
-	fi
-}
-
 excecute_ngrok() {
 	logo
 	config_bashrc=$(cat $ruta_bash | grep ngrok)
@@ -169,8 +152,6 @@ config_ngrok() {
 	excecute_ngrok
 }
 help(){
-	path
-	
 	echo -e """\n[!] Script tun ngrok 3.2 by [ Json Security ]
  
    [+] Execution:
@@ -186,7 +167,6 @@ if [[ ! $1 ]];then
 fi
 
 clear
-path
 
 if [[ $(test -f $ruta_bash;echo $?) -eq 1 ]];then
 	echo -e "\n$E No se detectaron archivos necesarios\n\n$A Ejecute:$G ./install.sh"

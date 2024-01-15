@@ -23,7 +23,7 @@ Restart your terminal
   tun
 </pre>
 
-[!] Script tun ngrok 3.2 by [ Json Security ]
+[ ! ] Script tun ngrok 3.2 by [ Json Security ]
  
    [+] Execution:
 	    tun -e

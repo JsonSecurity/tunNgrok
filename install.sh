@@ -91,8 +91,6 @@ requirements() {
     if [[ $(pwd) == "$HOME/$carpeta" ]];then
         if [[ $(test -d 'kali-fs' && test -d 'kali-binds' && test -f 'start-kali.sh';echo $?) -eq 0 ]];then
 
-           #    echo -e "\n$S kali-fs"
-
                         if [[ $(test -f "kali-fs/root/ngrok";echo $?) -eq 0 ]];then
                                 #echo -e "$S ngrok"
 
@@ -105,16 +103,11 @@ requirements() {
                                         printf "$S Shell$bol$Y =$W .bashrc\n"
                                         echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.bashrc"
                                         printf "$S Reinicia tu terminal y ejecuta$G tun\n"
-
-                                #else
-                                #       echo -e "\n$E$R .zshrc$W or$R .bashrc\n"
                                 fi
                         else
-                                #echo -e "$E$G ngrok$W is not installed\n"
                                 install_ngrok
                         fi
                 else
-                        #echo -e "$E$G kali-fs\n"
                         install_kali
         fi
     fi
@@ -176,12 +169,10 @@ install_ngrok() {
 }
 config_ngrok() {
         if [[ $(test -f "${ruta_root}.ngrok2/ngrok.yml";echo $?) -eq 1 ]];then
-                #echo -e "\n$E Authtoken"
                 echo -e "\n$A Sitio oficial:$C dashboard.ngrok.com/signup"
 
                 printf "$T Authtoken:$bol$Y "
                 read token
-
                 if [[ $(echo $token | wc -c ) > 15 ]];then
                         mkdir "${ruta_root}.ngrok2"
                         echo "authtoken: ${token}" > "${ruta_root}.ngrok2/ngrok.yml"

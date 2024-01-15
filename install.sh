@@ -71,7 +71,7 @@ logo() {
 			"""
 }
 requirements() {
-	if [ $(command -v proot | wc -l) == "0" ];then
+    if [ $(command -v proot | wc -l) == "0" ];then
         printf "$F Instalando$bord proot\n"
         pkg install proot -y > /dev/null 2>&1
     fi
@@ -94,6 +94,20 @@ requirements() {
 
 			if [[ $(test -f "kali-fs/root/ngrok";echo $?) -eq 0 ]];then
 				echo -e "$S ngrok"
+
+				if [[ $(ls "$HOME/.zshrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.zshrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
+					printf "\n$A .zshrc:$G tun\n"
+					echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.zshrc"
+					printf "$S Reinicia tu termina y ejecuta con:$G tun\n"
+				
+				elif [[ $(ls "$HOME/.bashrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.bashrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
+					printf "\n$S .bashrc:$G tun\n"
+					echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.bashrc"
+					printf "$S Reinicia tu termina y ejecuta con:$G tun\n"
+			
+				#else
+				#	echo -e "\n$E$R .zshrc$W or$R .bashrc\n"
+				fi
 			else
 				echo -e "$E$G ngrok$W is not installed\n"
 				install_ngrok

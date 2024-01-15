@@ -97,12 +97,12 @@ requirements() {
                                 #echo -e "$S ngrok"
 
                                 if [[ $(ls "$HOME/.zshrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.zshrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
-                                        printf "\n$A Shell$bol$Y =$W .zshrc\n"
+                                        printf "$A Shell$bol$Y =$W .zshrc\n"
                                         echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.zshrc"
                                         printf "$S Reinicia tu terminal y ejecuta$G tun\n"
 
                                 elif [[ $(ls "$HOME/.bashrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.bashrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
-                                        printf "\n$S Shell$bol$Y =$W .bashrc\n"
+                                        printf "$S Shell$bol$Y =$W .bashrc\n"
                                         echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.bashrc"
                                         printf "$S Reinicia tu terminal y ejecuta$G tun\n"
 
@@ -142,7 +142,7 @@ install_ngrok() {
         read option
 
         if [[ $option == 'y' || $option == 'Y' ]];then
-                printf "\n$F Instalando$G ngrok "
+                printf "\n$F Instalando "
         case `dpkg --print-architecture` in
                 aarch64)
                 architectureURL="arm64" ;;

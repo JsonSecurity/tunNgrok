@@ -64,8 +64,8 @@ logo() {
       ▄
      ███
     █████
-    ██ ██    $autor$cent
-    █████    $script$cent
+    ██ ██    $autor$W$cent
+    █████    $script$W$cent
    ███ ███
   █████████
   █▀     ▀█
@@ -88,6 +88,11 @@ requirements() {
         printf "$F Instalando$bord unzip\n"
         pkg install unzip -y > /dev/null 2>&1
     fi
+	if [ $(command -v bat | wc -l) == "0" ];then                        
+		printf "$F Instalando$bord bat\n"                               
+		pkg install bat -y > /dev/null 2>&1
+    fi
+ 
     if [[ $(pwd) == "$HOME/$carpeta" ]];then
         if [[ $(test -d 'kali-fs' && test -d 'kali-binds' && test -f 'start-kali.sh';echo $?) -eq 0 ]];then
 
@@ -96,12 +101,12 @@ requirements() {
 
                                 if [[ $(ls "$HOME/.zshrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.zshrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
                                         printf "$A Shell$bol$Y =$W .zshrc\n"
-                                        echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.zshrc"
+                                        echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/tun.sh'" >> "$HOME/.zshrc"
                                         printf "$S Reinicia tu terminal y ejecuta$G tun\n"
 
                                 elif [[ $(ls "$HOME/.bashrc" 2>/dev/null) ]] && [[ $(cat "$HOME/.bashrc" | grep tun > /dev/null 2>&1;echo $?) -eq 1 ]];then
                                         printf "$S Shell$bol$Y =$W .bashrc\n"
-                                        echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/ngrok.sh'" >> "$HOME/.bashrc"
+                                        echo "alias tun='bash /data/data/com.termux/files/home/$carpeta/tun.sh'" >> "$HOME/.bashrc"
                                         printf "$S Reinicia tu terminal y ejecuta$G tun\n"
                                 fi
                         else
@@ -138,22 +143,22 @@ install_ngrok() {
                 printf "\n$F Instalando "
         case `dpkg --print-architecture` in
                 aarch64)
-                architectureURL="arm64" ;;
+                	architectureURL="arm64" ;;
                 arm)
                         architectureURL="arm" ;;
                 armhf)
                         architectureURL="arm" ;;
                  amd64)
-                architectureURL="amd64" ;;
+                	architectureURL="amd64" ;;
                 i*86)
                     architectureURL="386" ;;
                 x86_64)
-                architectureURL="amd64" ;;
+                	architectureURL="amd64" ;;
                 *)
                     echo "unknown or unsupported architecture"
                 esac
-
-        wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-${architectureURL}.zip -O ngrok.zip >  /dev/null 2>&1
+        #wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-${architectureURL}.zip -O ngrok.zip >  /dev/null 2>&1
+		wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-${architectureURL}.zip -O ngrok.zip >  /dev/null 2>&1
         # arm : https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
         # aarch46 : https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip
         # i368 : https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip
@@ -168,27 +173,70 @@ install_ngrok() {
         fi
 }
 config_ngrok() {
-        if [[ $(test -f "${ruta_root}.ngrok2/ngrok.yml";echo $?) -eq 1 ]];then
+        if [[ $(test -f "${ruta_root}.config/ngrok/ngrok.yml";echo $?) -eq 1 ]];then
                 echo -e "\n$A Sitio oficial:$C dashboard.ngrok.com/signup"
 
                 printf "$T Authtoken:$bol$Y "
-                read token
+                read -s token
                 if [[ $(echo $token | wc -c ) > 15 ]];then
-                        mkdir "${ruta_root}.ngrok2"
-                        echo "authtoken: ${token}" > "${ruta_root}.ngrok2/ngrok.yml"
+                        #mkdir "${ruta_root}.ngrok2"
+                        echo -e "\n\n$F Procesando token\n$G"
+                        echo "./ngrok authtoken ${token}" >> "${ruta_root}.bashrc"
+                        "./start-kali.sh" 2>/dev/null &
+                        sleep 4 #valor ajustable
+                        echo > "${ruta_root}.bashrc"
+                        kill %
+                        echo -e "\n$S Token configurado"
 
-                        echo -e "\n$S Instalado\n"
                         requirements
                 else
                         echo -e "\n$E Error token"
                         exit 1
                 fi
         else
-                echo -e "\n$T Ejecute$G ./ngrok.sh"
+                echo -e "\n$T Ejecute$G ./tun.sh"
                 exit 0
         fi
 }
 
-logo
-requirements
-config_ngrok
+install_all() {
+	logo
+	requirements
+	config_ngrok
+}
+
+update_ngrok() {
+	printf  "\n$A Elimnar$R ngrok $YN:$Y "
+	read option
+
+	if [[ $option == 'y' || $option == 'Y' ]];then
+		echo -e "\n$F Eliminando binario$R ngrok"
+		rm -rf "${ruta_root}ngrok" "${ruta_root}.config/ngrok/ngrok.yml"
+		echo -e "$F Limpiando$R bashrc"
+		echo > "${ruta_root}.bashrc"
+		echo -e "\n$A Terminado"
+
+		install_all
+	fi
+}
+
+help() {
+	echo -e "
+[+] Usage:
+    $0 -i 	# Install all
+    $0 -u 	# Update ngrok
+" | bat -l java -pp
+}
+
+if [ ! $1 ];then
+	help
+	exit 1
+fi
+
+while getopts u,i arg;do
+	case $arg in
+		u) update_ngrok;;
+		i) install_all;;
+		*) help;;
+	esac
+done

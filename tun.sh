@@ -37,7 +37,7 @@ cur="\033[3m"
 sub="\033[4m"
 
 #salidas/entradas
-cent=$C
+cent=$G
 bord=$N
 excr=$W
 
@@ -51,8 +51,8 @@ S="${W}$bord [${bol}${G}✓${W}${bord}]$excr"
 I="$bord [${cent}\$${bord}]${cent}❯$excr"
 
 #info
-autor="${bol}$bord [${bol}${G}𝙹𝚜𝚘𝚗 𝚂𝚎𝚌𝚞𝚛𝚒𝚝𝚢${bord}]"
-script="${bol}$bord [${bol}${G}𝙽𝚐𝚛𝚘𝚔 𝚏𝚘𝚛 𝚝𝚎𝚛𝚖𝚞𝚡${bord}]"
+autor="${bol}$bord [${bol}${W}${R}𝙹𝚜𝚘𝚗 𝚂𝚎𝚌𝚞𝚛𝚒𝚝𝚢${bord}]"
+script="${bol}$bord [${bol}${W}${R}𝙽𝚐𝚛𝚘𝚔 𝚏𝚘𝚛 𝚝𝚎𝚛𝚖𝚞𝚡${bord}]"
 
 #importante para ejecutar
 carpeta="tunNgrok"
@@ -82,7 +82,7 @@ excecute_ngrok() {
 		exit 1
 	fi
 	
-	echo -e "\n$F Ejecutando$Y ->$W$C $protc$W:$C$puert"
+	echo -e "\n$F Runing:$cent ./ngrok $protc $puert"
 	
 	bash $ruta_kali > /dev/null 2>&1 &
 	#echo -e "$Y ejecutando ngrok..."
@@ -98,7 +98,7 @@ excecute_ngrok() {
 			let cont=cont+1
 
 			if [[ $cont == 10 ]];then
-				echo -e "$E error de conexion"
+				echo -e "\n$E Connection error"
 				exit 1
 			fi
 		fi
@@ -107,29 +107,32 @@ excecute_ngrok() {
 	ip=$(echo $tunel | awk '{print $3}')
 	port=$(echo $tunel | awk '{print $4}')
 
-	echo -e "\n$S$G ngrok";sleep .3
-	echo -e "$T ip:$G $ip";sleep .3
-	echo -e "$T puerto:$G $port";sleep .3
-	
-	printf "\n"
+	echo -e "$T status:$cent online";sleep .3
+	echo -e "$T ip:$cent $ip";sleep .3
+
+	if [ $port ];then
+		echo -e "$T port:$cent $port";sleep .3
+	fi
+
+	echo ""
 	while true;do
-		read salida
 		echo -e "$Y CTRL + C to exit"
+		read salida
 	done
 	#ipt=$(curl -s -N http://127.0.0.1:4040/api/tunnels	
 }
 config_ngrok() {
-	echo -e "\n$S Iniciando$G tun$W ngrok\n"
+	echo -e "\n$S start:$cent tun ngrok\n"
 	protocolos_ngrok="http tcp tls"
 	if [[ -n $puerto && -n $protocolo && -n $(echo $protocolos_ngrok | grep $protocolo) && $puerto =~ ^[0-9]+$ ]];then
 		ip_local=$(ifconfig | grep inet | awk 'NR==3' | awk '{print $2}')
-		echo -e "$S$G local";sleep .3
-		echo -e "$T Protocolo:$G $protocolo";sleep .3
-		echo -e "$T ip:$G $ip_local";sleep .3
-		echo -e "$T Puerto:$G $puerto";sleep .3
+		echo -e "$T status:$cent local";sleep .3
+		echo -e "$T ip:$cent $ip_local";sleep .3
+		echo -e "$T protocol:$cent $protocolo";sleep .3
+		echo -e "$T port:$cent $puerto";sleep .3
 
 		if [[ $(test -f $ruta_bash;echo $?) -eq 1 ]];then
-			echo -e "$E$G ./install.sh"
+			echo -e "$E$cent ./install.sh"
 			exit 1
 		fi
 
@@ -152,12 +155,10 @@ config_ngrok() {
 	excecute_ngrok
 }
 help(){
-	echo -e """\n[!] Script tun ngrok 3.2 by [ Json Security ]
+	echo -e """\n[!] Script tun ngrok 3.3 by [ Json Security ]
  
-   [+] Execution:
+[+] Usage:
 	tun -e
-				
-   [+] Config:
 	tun -s <protocolo> -p <puerto>
 			""" | bat -pp -l java
 }
@@ -169,7 +170,7 @@ fi
 clear
 
 if [[ $(test -f $ruta_bash;echo $?) -eq 1 ]];then
-	echo -e "\n$E No se detectaron archivos necesarios\n\n$A Ejecute:$G ./install.sh"
+	echo -e "\n$E No se detectaron archivos necesarios\n\n$A Ejecute:$cent ./install.sh"
 	exit 1
 fi
 

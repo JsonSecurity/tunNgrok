@@ -22,7 +22,7 @@ chmod +x tun.sh
 ./install.sh
 </pre>
 
-`Restart your terminal`
+Restart your terminal
 
 <h3>Help</h3>
 <pre>
